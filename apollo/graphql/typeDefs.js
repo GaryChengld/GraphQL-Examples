@@ -46,12 +46,13 @@ module.exports = gql`
     primaryFunction: String
   }
 
-  type Query {
-    about: String!
+  type Query {    
     starship(id: ID!): Starship
     human(id: ID!): Human
     droid(id: ID!): Droid
     character(id: ID!): Character
+    hero(episode: Episode): Character
+    about: String!
   }
 
   type Mutation {

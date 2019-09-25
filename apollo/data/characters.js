@@ -97,6 +97,15 @@ function getDroid(id) {
   return droidData[id];
 }
 
+function getHero(episode) {
+  if (episode === 'EMPIRE') {
+    // Luke is the hero of Episode V.
+    return humanData['1000'];
+  }
+  // Artoo is the hero otherwise.
+  return droidData['2001'];
+}
+
 function getCharacterType(id) {
   if (humanData[id]) {
     return 'Human';
@@ -113,4 +122,5 @@ module.exports = {
   getDroid,
   getHero,
   getCharacterType,
+  getHero
 };

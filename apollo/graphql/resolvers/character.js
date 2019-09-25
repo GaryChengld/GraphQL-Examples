@@ -7,6 +7,7 @@ module.exports = {
     human: (_, { id }) => characterData.getHuman(id),
     droid: (_, { id }) => characterData.getDroid(id),
     character: (_, { id }) => characterData.getCharacter(id),
+    hero: (_, { episode }) => characterData.getHero(episode),
   },
   Character: {
     __resolveType(data, context, info) {
