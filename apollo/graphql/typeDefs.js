@@ -49,6 +49,9 @@ module.exports = gql`
   type Query {
     about: String!
     starship(id: ID!): Starship
+    human(id: ID!): Human
+    droid(id: ID!): Droid
+    character(id: ID!): Character
   }
 
   type Mutation {

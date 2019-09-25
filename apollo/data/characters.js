@@ -74,6 +74,7 @@ droids.forEach((droid) => {
 });
 
 function getCharacter(id) {
+  console.log(`getCharacter, id:${id}`);
   return humanData[id] || droidData[id];
 }
 
@@ -87,9 +88,29 @@ function getHero(episode) {
 }
 
 function getHuman(id) {
+  console.log(`getHuman, id:${id}`);
   return humanData[id];
 }
 
 function getDroid(id) {
+  console.log(`getDroid, id:${id}`);
   return droidData[id];
 }
+
+function getCharacterType(id) {
+  if (humanData[id]) {
+    return 'Human';
+  }
+  if (droidData[id]) {
+    return 'Droid';
+  }
+  return null;
+}
+
+module.exports = {
+  getCharacter,
+  getHuman,
+  getDroid,
+  getHero,
+  getCharacterType,
+};
