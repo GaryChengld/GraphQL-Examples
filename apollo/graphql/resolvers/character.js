@@ -1,29 +1,28 @@
-const characterData = require('../../data/characters');
-const starshipData = require('../../data/starships');
+const dataService = require('../../dataService');
 const utils = require('../../utils');
 
 module.exports = {
   Query: {
-    human: (_, { id }) => characterData.getHuman(id),
-    droid: (_, { id }) => characterData.getDroid(id),
-    character: (_, { id }) => characterData.getCharacter(id),
-    hero: (_, { episode }) => characterData.getHero(episode),
+    human: (_, { id }) => dataService.getHuman(id),
+    droid: (_, { id }) => dataService.getDroid(id),
+    character: (_, { id }) => dataService.getCharacter(id),
+    hero: (_, { episode }) => dataService.getHero(episode),
   },
   Character: {
-    __resolveType(data, context, info) {
-      const characterType = characterData.getCharacterType(data.id);
-      if (characterType) {
-        return info.schema.getType(characterType);
+    __resolveType(data, _, info) {
+      const dataType = dataService.getDataType(data.id);
+      if (dataType) {
+        return info.schema.getType(dataType);
       }
       return null;
     },
   },
   Human: {
     height: ({ height }, { unit }) => utils.getLength(height, unit),
-    friends: ({ friends }) => friends.map(characterData.getCharacter),
-    starships: ({ starships }) => starships.map(starshipData.getStarship),
+    friends: ({ id }) => dataService.getFriends(id),
+    starships: ({ id }) => dataService.getStarshipsByHumanId(id),
   },
   Droid: {
-    friends: ({ friends }) => friends.map(characterData.getCharacter),
+    friends: ({ id }) => dataService.getFriends(id),
   },
 };

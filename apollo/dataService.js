@@ -73,6 +73,39 @@ droids.forEach((droid) => {
   droidData[droid.id] = droid;
 });
 
+const starships = [
+  {
+    id: '3000',
+    name: 'Millenium Falcon',
+    length: 34.37,
+  },
+  {
+    id: '3001',
+    name: 'X-Wing',
+    length: 12.5,
+  },
+  {
+    id: '3002',
+    name: 'TIE Advanced x1',
+    length: 9.2,
+  },
+  {
+    id: '3003',
+    name: 'Imperial shuttle',
+    length: 20,
+  },
+];
+
+const starshipData = {};
+starships.forEach((ship) => {
+  starshipData[ship.id] = ship;
+});
+
+const reviewData = {};
+reviewData["NEWHOPE"] = [];
+reviewData["EMPIRE"] = [];
+reviewData["JEDI"] = [];
+
 function getCharacter(id) {
   console.log(`getCharacter, id:${id}`);
   return humanData[id] || droidData[id];
@@ -80,10 +113,8 @@ function getCharacter(id) {
 
 function getHero(episode) {
   if (episode === 'EMPIRE') {
-    // Luke is the hero of Episode V.
     return humanData['1000'];
   }
-  // Artoo is the hero otherwise.
   return droidData['2001'];
 }
 
@@ -97,21 +128,62 @@ function getDroid(id) {
   return droidData[id];
 }
 
-function getHero(episode) {
-  if (episode === 'EMPIRE') {
-    // Luke is the hero of Episode V.
-    return humanData['1000'];
+function getFriends(id) {
+  console.log(`getFriends, id:${id}`);
+  const characters = { ...humanData, ...droidData };
+  const character = characters[id];
+  if (character) {
+    const { friends } = character;
+    return friends.map(fid => characters[fid]);
   }
-  // Artoo is the hero otherwise.
-  return droidData['2001'];
+  return null;
 }
 
-function getCharacterType(id) {
+function getStarship(id) {
+  console.log(`getStarship id=${id}`);
+  return starshipData[id];
+}
+
+function getStarshipsByHumanId(id) {
+  console.log(`getStarshipsByHumanId, HumanId=${id}`);
+  const human = humanData[id];
+  if (human) {
+    const { starships } = human;
+    return starships.map(sid => starshipData[sid]);
+  }
+  return null;
+}
+
+function search(text) {
+  console.log(`search, text:${text}`);
+  const re = new RegExp(text, 'i');
+  const allData = [...humans, ...droids, ...starships];
+  return allData.filter(obj => re.test(obj.name));
+}
+
+function createReview(episode, review) {
+  console.log(`createReview episode:${episode}, commentary:${review.commentary}`);
+  let reviews = reviewData[episode];
+  if (reviews) {
+    reviews.push(review);
+  }
+  return review;
+}
+
+function getReviews(episode) {
+  console.log(`getReviews episode:${episode}`);
+  return reviewData[episode];
+}
+
+function getDataType(id) {
   if (humanData[id]) {
     return 'Human';
   }
   if (droidData[id]) {
     return 'Droid';
+  }
+  if (starshipData[id]) {
+    return 'Starship';
   }
   return null;
 }
@@ -121,6 +193,12 @@ module.exports = {
   getHuman,
   getDroid,
   getHero,
-  getCharacterType,
-  getHero
+  getDataType,
+  getHero,
+  getStarship,
+  getFriends,
+  getStarshipsByHumanId,
+  search,
+  createReview,
+  getReviews
 };

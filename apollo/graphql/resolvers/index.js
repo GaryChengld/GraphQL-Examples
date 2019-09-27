@@ -1,6 +1,8 @@
 const aboutResolver = require('./about');
 const starshipResolver = require('./starship');
 const characterResolver = require('./character');
+const searchResolver = require('./search');
+const reviewResolver = require('./review');
 
 function mergeResolvers(...resolvers) {
   let mergedResolvers = {
@@ -17,5 +19,11 @@ function mergeResolvers(...resolvers) {
   return mergedResolvers;
 }
 
-const resolvers = mergeResolvers(aboutResolver, starshipResolver, characterResolver);
+const resolvers = mergeResolvers(
+  aboutResolver,
+  starshipResolver,
+  characterResolver,
+  searchResolver,
+  reviewResolver
+);
 module.exports = resolvers;

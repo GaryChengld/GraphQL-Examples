@@ -1,6 +1,27 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
+  schema {
+    query: Query
+    mutation: Mutation
+  }
+
+  type Query {    
+    starship(id: ID!): Starship
+    human(id: ID!): Human
+    droid(id: ID!): Droid
+    character(id: ID!): Character
+    hero(episode: Episode): Character
+    search(text: String): [SearchResult]
+    reviews(episode: Episode!): [Review]
+    about: String!
+  }
+
+  type Mutation {
+    createReview(episode: Episode, review: ReviewInput!): Review
+    setAboutMessage(message: String!): String
+  }
+
   enum Episode {
     # Star Wars Episode IV: A New Hope, released in 1977.
     NEWHOPE
@@ -46,16 +67,15 @@ module.exports = gql`
     primaryFunction: String
   }
 
-  type Query {    
-    starship(id: ID!): Starship
-    human(id: ID!): Human
-    droid(id: ID!): Droid
-    character(id: ID!): Character
-    hero(episode: Episode): Character
-    about: String!
+  type Review {    
+    stars: Int!
+    commentary: String
   }
 
-  type Mutation {
-    setAboutMessage(message: String!): String
+  input ReviewInput {
+    stars: Int!
+    commentary: String!
   }
+
+  union SearchResult = Human | Droid | Starship
 `;
