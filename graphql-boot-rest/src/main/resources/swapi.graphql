@@ -1,0 +1,77 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    starship(id: ID!): Starship
+    human(id: ID!): Human
+    droid(id: ID!): Droid
+    character(id: ID!): Character
+    hero(episode: Episode): Character
+    search(text: String): [SearchResult]
+    reviews(episode: Episode!): [Review]
+    about: String!
+}
+
+type Mutation {
+    createReview(episode: Episode, review: ReviewInput!): Review
+    setAboutMessage(message: String!): String
+}
+
+enum Episode {
+    # Star Wars Episode IV: A New Hope, released in 1977.
+    NEWHOPE
+    # Star Wars Episode V: The Empire Strikes Back, released in 1980.
+    EMPIRE
+    # Star Wars Episode VI: Return of the Jedi, released in 1983.
+    JEDI
+}
+
+enum LengthUnit {
+    METER
+    FOOT
+}
+
+interface Character {
+    id: ID!
+    name: String!
+    friends: [Character]
+    appearsIn: [Episode]!
+}
+
+type Starship {
+    id: ID!
+    name: String!
+    length(unit: LengthUnit = METER): Float
+}
+
+type Human implements Character {
+    id: ID!
+    name: String!
+    height(unit: LengthUnit = METER): Float
+    mass: Float
+    friends: [Character]
+    appearsIn: [Episode]!
+    starships: [Starship]
+}
+
+type Droid implements Character {
+    id: ID!
+    name: String!
+    friends: [Character]
+    appearsIn: [Episode]!
+    primaryFunction: String
+}
+
+type Review {
+    stars: Int!
+    commentary: String
+}
+
+input ReviewInput {
+    stars: Int!
+    commentary: String!
+}
+
+union SearchResult = Human | Droid | Starship
