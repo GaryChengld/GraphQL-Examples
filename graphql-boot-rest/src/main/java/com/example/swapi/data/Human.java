@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Human implements Character {
+public class Human implements MovieCharacter {
     private String id;
     private String name;
     private Double height;

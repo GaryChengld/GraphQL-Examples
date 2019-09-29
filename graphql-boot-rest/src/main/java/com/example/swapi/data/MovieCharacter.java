@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Gary Cheng
  */
-public interface Character {
+public interface MovieCharacter {
     String getId();
 
     String getName();

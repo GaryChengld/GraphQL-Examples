@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Droid implements Character{
+public class Droid implements MovieCharacter {
     private String id;
     private String name;
     private List<String> friends;
