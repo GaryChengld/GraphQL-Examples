@@ -194,7 +194,6 @@ module.exports = {
   getDroid,
   getHero,
   getDataType,
-  getHero,
   getStarship,
   getFriends,
   getStarshipsByHumanId,
