@@ -131,6 +131,7 @@ public class DataService {
      */
     @PostConstruct
     public void initData() {
+        log.info("initData");
         this.humanData = new HashMap<>();
         this.droidData = new HashMap<>();
         this.starshipData = new HashMap<>();
