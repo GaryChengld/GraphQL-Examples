@@ -2,8 +2,8 @@ package com.example.swapi;
 
 import com.example.swapi.data.Droid;
 import com.example.swapi.data.Human;
+import graphql.TypeResolutionEnvironment;
 import graphql.schema.GraphQLObjectType;
-import graphql.schema.TypeResolver;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GraphQLTypeResolver {
 
-    TypeResolver characterTypeResolver = environment -> {
+    public GraphQLObjectType resolveObjectType(TypeResolutionEnvironment environment) {
         Object object = environment.getObject();
         if (object instanceof Human) {
             return (GraphQLObjectType) environment.getSchema().getType("Human");
@@ -21,5 +21,5 @@ public class GraphQLTypeResolver {
         } else {
             return (GraphQLObjectType) environment.getSchema().getType("Starship");
         }
-    };
+    }
 }
