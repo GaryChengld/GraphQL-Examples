@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class DataService {
     private Map<String, Droid> droidData;
     private Map<String, Starship> starshipData;
     private Map<String, MovieCharacter> characterData;
+    private Map<Episode, List<Review>> reviewData;
 
     /**
      * Find character by id
@@ -74,7 +76,7 @@ public class DataService {
      * @return
      */
     public MovieCharacter getHero(Episode episode) {
-        log.info("getFriends, episode={}", episode);
+        log.info("getHero, episode={}", episode);
         if (episode == EMPIRE) {
             return characterData.get("1000");
         } else {
@@ -102,11 +104,32 @@ public class DataService {
                 .collect(Collectors.toList());
     }
 
+    public List<Object> search(String text) {
+        log.info("search by text, text={}", text);
+        List<Object> results = new ArrayList<>();
+        results.addAll(characterData.values().stream().filter(c -> textMatch(c.getName(), text)).collect(Collectors.toList()));
+        results.addAll(starshipData.values().stream().filter(s -> textMatch(s.getName(), text)).collect(Collectors.toList()));
+        return results;
+    }
+
+    public Review addReview(Episode episode, Review review) {
+        log.info("addReview for episode {}", episode);
+        reviewData.get(episode).add(review);
+        return review;
+    }
+
+    public List<Review> getReviews(Episode episode) {
+        return reviewData.get(episode);
+    }
+
+    private boolean textMatch(String source, String text) {
+        return source.toUpperCase().indexOf(text.toUpperCase()) >= 0;
+    }
+
     /**
      * Initialize data
      */
     @PostConstruct
-
     public void initData() {
         this.humanData = new HashMap<>();
         this.droidData = new HashMap<>();
@@ -159,14 +182,14 @@ public class DataService {
         );
 
         this.addDroid(new Droid(
-                "2001",
+                "2000",
                 "C-3PO",
                 asList("1000", "1002", "1003", "2001"),
                 asList(NEWHOPE, EMPIRE, JEDI),
                 "Protocol"
         ));
         this.addDroid(new Droid(
-                "2002",
+                "2001",
                 "R2-D2",
                 asList("1000", "1002", "1003"),
                 asList(NEWHOPE, EMPIRE, JEDI),
@@ -193,6 +216,10 @@ public class DataService {
                 "Imperial shuttle",
                 20.0
         ));
+        reviewData = new HashMap<>();
+        reviewData.put(NEWHOPE, new ArrayList<>());
+        reviewData.put(EMPIRE, new ArrayList<>());
+        reviewData.put(JEDI, new ArrayList<>());
     }
 
     private void addHuman(Human human) {

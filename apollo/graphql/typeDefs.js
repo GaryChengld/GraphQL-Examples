@@ -18,7 +18,7 @@ module.exports = gql`
   }
 
   type Mutation {
-    createReview(episode: Episode, review: ReviewInput!): Review
+    createReview(episode: Episode!, review: ReviewInput!): Review
     setAboutMessage(message: String!): String
   }
 
