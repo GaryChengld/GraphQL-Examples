@@ -16,8 +16,7 @@ public class GraphQLTypeResolver {
         Object object = environment.getObject();
         if (object instanceof Human) {
             return (GraphQLObjectType) environment.getSchema().getType("Human");
-        }
-        if (object instanceof Droid) {
+        } else if (object instanceof Droid) {
             return (GraphQLObjectType) environment.getSchema().getType("Droid");
         } else {
             return (GraphQLObjectType) environment.getSchema().getType("Starship");
