@@ -1,11 +1,19 @@
 package com.example.swapi;
 
-import com.example.swapi.data.*;
-import graphql.schema.DataFetcher;
+import com.example.swapi.data.DataService;
+import com.example.swapi.data.Droid;
+import com.example.swapi.data.Episode;
+import com.example.swapi.data.Human;
+import com.example.swapi.data.LengthUnit;
+import com.example.swapi.data.MovieCharacter;
+import com.example.swapi.data.Review;
+import com.example.swapi.data.Starship;
+import graphql.schema.DataFetchingEnvironment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.example.swapi.data.LengthUnit.FOOT;
@@ -24,98 +32,74 @@ public class GraphQLDataFetchers {
         this.dataService = dataService;
     }
 
-    public DataFetcher aboutDataFetcher() {
-        return dataFetchingEnvironment -> aboutMessage;
+    public MovieCharacter getcharacter(DataFetchingEnvironment environment) {
+        String id = environment.getArgument("id");
+        return dataService.getCharacter(id);
     }
 
-    public DataFetcher characterDataFetcher() {
-        return dataFetchingEnvironment -> {
-            String id = dataFetchingEnvironment.getArgument("id");
-            return dataService.getCharacter(id);
-        };
+    public Human getHuman(DataFetchingEnvironment environment) {
+        String id = environment.getArgument("id");
+        return dataService.getHuman(id);
     }
 
-    public DataFetcher humanDataFetcher() {
-        return dataFetchingEnvironment -> {
-            String id = dataFetchingEnvironment.getArgument("id");
-            return dataService.getHuman(id);
-        };
+    public Droid getDroid(DataFetchingEnvironment environment) {
+        String id = environment.getArgument("id");
+        return dataService.getDroid(id);
     }
 
-    public DataFetcher humanStarshipsDataFetcher() {
-        return dataFetchingEnvironment -> {
-            Human human = dataFetchingEnvironment.getSource();
-            return dataService.getStarshipsByHumanId(human.getId());
-        };
+    public MovieCharacter getHero(DataFetchingEnvironment environment) {
+        Episode episode = Episode.valueOf(environment.getArgument("episode"));
+        return dataService.getHero(episode);
     }
 
-    public DataFetcher starshipDataFetcher() {
-        return dataFetchingEnvironment -> {
-            String id = dataFetchingEnvironment.getArgument("id");
-            return dataService.getStarship(id);
-        };
+    public List<Starship> getStarshipsByHuman(DataFetchingEnvironment environment) {
+        Human human = environment.getSource();
+        return dataService.getStarshipsByHumanId(human.getId());
     }
 
-    public DataFetcher droidDataFetcher() {
-        return dataFetchingEnvironment -> {
-            String id = dataFetchingEnvironment.getArgument("id");
-            return dataService.getDroid(id);
-        };
+    public Starship getStarship(DataFetchingEnvironment environment) {
+        String id = environment.getArgument("id");
+        return dataService.getStarship(id);
     }
 
-    public DataFetcher friendsDataFetcher() {
-        return dataFetchingEnvironment -> {
-            MovieCharacter character = dataFetchingEnvironment.getSource();
-            return dataService.getFriends(character.getId());
-        };
+    public List<MovieCharacter> getFriends(DataFetchingEnvironment environment) {
+        MovieCharacter character = environment.getSource();
+        return dataService.getFriends(character.getId());
     }
 
-    public DataFetcher starshipLengthDataFetcher() {
-        return dataFetchingEnvironment -> {
-            Starship starship = dataFetchingEnvironment.getSource();
-            LengthUnit unit = LengthUnit.valueOf(dataFetchingEnvironment.getArgument("unit"));
-            return this.getLength(starship.getLength(), unit);
-        };
+    public Double getStarshipLength(DataFetchingEnvironment environment) {
+        Starship starship = environment.getSource();
+        LengthUnit unit = LengthUnit.valueOf(environment.getArgument("unit"));
+        return this.getLength(starship.getLength(), unit);
     }
 
-    public DataFetcher heroDataFetcher() {
-        return dataFetchingEnvironment -> {
-            Episode episode = Episode.valueOf(dataFetchingEnvironment.getArgument("episode"));
-            return dataService.getHero(episode);
-        };
+    public List<Object> search(DataFetchingEnvironment environment) {
+        String text = environment.getArgument("text");
+        return dataService.search(text);
     }
 
-    public DataFetcher searchDataFetcher() {
-        return dataFetchingEnvironment -> {
-            String text = dataFetchingEnvironment.getArgument("text");
-            return dataService.search(text);
-        };
+    public String getAboutMessage(DataFetchingEnvironment environment) {
+        return this.aboutMessage;
     }
 
-    public DataFetcher setAboutMessage() {
-        return dataFetchingEnvironment -> {
-            String message = dataFetchingEnvironment.getArgument("message");
-            this.aboutMessage = message;
-            return message;
-        };
+    public String setAboutMessage(DataFetchingEnvironment environment) {
+        String message = environment.getArgument("message");
+        this.aboutMessage = message;
+        return message;
     }
 
-    public DataFetcher createReviewDataFetcher() {
-        return dataFetchingEnvironment -> {
-            Episode episode = Episode.valueOf(dataFetchingEnvironment.getArgument("episode"));
-            Map<String, Object> input = dataFetchingEnvironment.getArgument("review");
-            Integer stars = (Integer) input.get("stars");
-            String commentary = (String) input.get("commentary");
-            Review review = new Review(stars, commentary);
-            return dataService.addReview(episode, review);
-        };
+    public Review createReview(DataFetchingEnvironment environment) {
+        Episode episode = Episode.valueOf(environment.getArgument("episode"));
+        Map<String, Object> input = environment.getArgument("review");
+        Integer stars = (Integer) input.get("stars");
+        String commentary = (String) input.get("commentary");
+        Review review = new Review(stars, commentary);
+        return dataService.addReview(episode, review);
     }
 
-    public DataFetcher reviewsDataFetcher() {
-        return dataFetchingEnvironment -> {
-            Episode episode = Episode.valueOf(dataFetchingEnvironment.getArgument("episode"));
-            return dataService.getReviews(episode);
-        };
+    public List<Review> getReviews(DataFetchingEnvironment environment) {
+        Episode episode = Episode.valueOf(environment.getArgument("episode"));
+        return dataService.getReviews(episode);
     }
 
     private Double getLength(Double length, LengthUnit unit) {
