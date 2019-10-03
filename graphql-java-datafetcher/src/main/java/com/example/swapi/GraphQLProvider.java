@@ -41,7 +41,7 @@ public class GraphQLProvider {
 
     @PostConstruct
     public void init() throws IOException {
-        log.info("init GraphQLProvider");
+        log.debug("init GraphQLProvider");
         URL url = Resources.getResource(SCHEMA_RESOURCE);
         String sdl = Resources.toString(url, Charsets.UTF_8);
         GraphQLSchema graphQLSchema = buildSchema(sdl);

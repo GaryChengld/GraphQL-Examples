@@ -32,7 +32,7 @@ public class DataService {
      * @return
      */
     public MovieCharacter getCharacter(String id) {
-        log.info("getCharacter, id={}", id);
+        log.debug("getCharacter, id={}", id);
         return characterData.get(id);
     }
 
@@ -43,7 +43,7 @@ public class DataService {
      * @return
      */
     public Human getHuman(String id) {
-        log.info("getHuman, id={}", id);
+        log.debug("getHuman, id={}", id);
         return humanData.get(id);
     }
 
@@ -54,7 +54,7 @@ public class DataService {
      * @return
      */
     public Droid getDroid(String id) {
-        log.info("getDroid, id={}", id);
+        log.debug("getDroid, id={}", id);
         return droidData.get(id);
     }
 
@@ -65,7 +65,7 @@ public class DataService {
      * @return
      */
     public Starship getStarship(String id) {
-        log.info("getStarship, id={}", id);
+        log.debug("getStarship, id={}", id);
         return starshipData.get(id);
     }
 
@@ -76,7 +76,7 @@ public class DataService {
      * @return
      */
     public MovieCharacter getHero(Episode episode) {
-        log.info("getHero, episode={}", episode);
+        log.debug("getHero, episode={}", episode);
         if (episode == EMPIRE) {
             return characterData.get("1000");
         } else {
@@ -91,21 +91,21 @@ public class DataService {
      * @return
      */
     public List<MovieCharacter> getFriends(String id) {
-        log.info("getFriends, id={}", id);
+        log.debug("getFriends, id={}", id);
         return this.characterData.get(id).getFriends().stream()
                 .map(cid -> characterData.get(cid))
                 .collect(Collectors.toList());
     }
 
     public List<Starship> getStarshipsByHumanId(String id) {
-        log.info("getStarshipsByHumanId, id={}", id);
+        log.debug("getStarshipsByHumanId, id={}", id);
         return this.humanData.get(id).getStarships().stream()
                 .map(sid -> this.starshipData.get(sid))
                 .collect(Collectors.toList());
     }
 
     public List<Object> search(String text) {
-        log.info("search by text, text={}", text);
+        log.debug("search by text, text={}", text);
         List<Object> results = new ArrayList<>();
         results.addAll(characterData.values().stream().filter(c -> textMatch(c.getName(), text)).collect(Collectors.toList()));
         results.addAll(starshipData.values().stream().filter(s -> textMatch(s.getName(), text)).collect(Collectors.toList()));
@@ -113,12 +113,13 @@ public class DataService {
     }
 
     public Review addReview(Episode episode, Review review) {
-        log.info("addReview for episode {}", episode);
+        log.debug("addReview for episode {}", episode);
         reviewData.get(episode).add(review);
         return review;
     }
 
     public List<Review> getReviews(Episode episode) {
+        log.debug("getReviews for episode {}", episode);
         return reviewData.get(episode);
     }
 
@@ -131,7 +132,7 @@ public class DataService {
      */
     @PostConstruct
     public void initData() {
-        log.info("initData");
+        log.debug("initData");
         this.humanData = new HashMap<>();
         this.droidData = new HashMap<>();
         this.starshipData = new HashMap<>();
