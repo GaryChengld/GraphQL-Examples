@@ -26,7 +26,7 @@ public class GraphQLDataFetchers {
         this.dataService = dataService;
     }
 
-    public CompletableFuture<MovieCharacter> getcharacter(DataFetchingEnvironment environment) {
+    public CompletableFuture<MovieCharacter> getCharacter(DataFetchingEnvironment environment) {
         String id = environment.getArgument("id");
         return CompletableFuture.completedFuture(dataService.getCharacter(id));
     }
@@ -59,6 +59,12 @@ public class GraphQLDataFetchers {
     public CompletableFuture<List<MovieCharacter>> getFriends(DataFetchingEnvironment environment) {
         MovieCharacter character = environment.getSource();
         return CompletableFuture.completedFuture(dataService.getFriends(character.getId()));
+    }
+
+    public Double getHumanHeight(DataFetchingEnvironment environment) {
+        Human human = environment.getSource();
+        LengthUnit unit = LengthUnit.valueOf(environment.getArgument("unit"));
+        return this.getLength(human.getHeight(), unit);
     }
 
     public Double getStarshipLength(DataFetchingEnvironment environment) {

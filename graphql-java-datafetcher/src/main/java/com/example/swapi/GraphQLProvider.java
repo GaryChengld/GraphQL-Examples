@@ -72,6 +72,7 @@ public class GraphQLProvider {
                 .type(newTypeWiring("Character")
                         .typeResolver(graphQLTypeResolver::resolveObjectType))
                 .type(newTypeWiring("Human")
+                        .dataFetcher("height", graphQLDataFetchers::getHumanHeight)
                         .dataFetcher("friends", graphQLDataFetchers::getFriends)
                         .dataFetcher("starships", graphQLDataFetchers::getStarshipsByHuman))
                 .type(newTypeWiring("Droid")

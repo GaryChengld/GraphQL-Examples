@@ -67,6 +67,12 @@ public class GraphQLDataFetchers {
         return dataService.getFriends(character.getId());
     }
 
+    public Double getHumanHeight(DataFetchingEnvironment environment) {
+        Human human = environment.getSource();
+        LengthUnit unit = LengthUnit.valueOf(environment.getArgument("unit"));
+        return this.getLength(human.getHeight(), unit);
+    }
+
     public Double getStarshipLength(DataFetchingEnvironment environment) {
         Starship starship = environment.getSource();
         LengthUnit unit = LengthUnit.valueOf(environment.getArgument("unit"));

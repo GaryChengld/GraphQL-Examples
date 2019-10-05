@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -59,7 +58,7 @@ public class GraphQLProvider {
         return RuntimeWiring.newRuntimeWiring()
                 .type(newTypeWiring("Query")
                         .dataFetcher("about", graphQLDataFetchers::getAboutMessage)
-                        .dataFetcher("character", graphQLDataFetchers::getcharacter)
+                        .dataFetcher("character", graphQLDataFetchers::getCharacter)
                         .dataFetcher("human", graphQLDataFetchers::getHuman)
                         .dataFetcher("droid", graphQLDataFetchers::getDroid)
                         .dataFetcher("starship", graphQLDataFetchers::getStarship)
@@ -72,6 +71,7 @@ public class GraphQLProvider {
                 .type(newTypeWiring("Character")
                         .typeResolver(graphQLTypeResolver::resolveObjectType))
                 .type(newTypeWiring("Human")
+                        .dataFetcher("height", graphQLDataFetchers::getHumanHeight)
                         .dataFetcher("friends", graphQLDataFetchers::getFriends)
                         .dataFetcher("starships", graphQLDataFetchers::getStarshipsByHuman))
                 .type(newTypeWiring("Droid")
