@@ -4,6 +4,6 @@
 
 **Table of Contents**
 
-* [Example of Node.js express and Apollo](apollo/)
-* [Example of spring-boot-web](graphql-java-datafetcher/)
-* [Example of spring-boot-webflux](graphql-java-reactive/)
+* [Example of Node.js express and Apollo](apollo-server/)
+* [Example of spring-boot-web](graphql-java-webmvc/)
+* [Example of spring-boot-webflux](graphql-java-webflux/)
