@@ -93,3 +93,4 @@ build/
 
 ### VS Code ###
 .vscode/
+.editorconfig
