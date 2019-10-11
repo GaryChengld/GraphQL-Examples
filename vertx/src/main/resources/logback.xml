@@ -9,6 +9,7 @@
     <logger name="com.mchange.v2" level="warn"/>
     <logger name="io.netty" level="warn"/>
     <logger name="io.vertx" level="info"/>
+    <logger name="graphql" level="info"/>
     <logger name="com.examples" level="debug"/>
 
     <root level="debug">
