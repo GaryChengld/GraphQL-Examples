@@ -1,5 +1,6 @@
 package com.example.vertx.graphql.data;
 
+import io.reactivex.Single;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ public class DataService {
      * @param id character id
      * @return
      */
-    public MovieCharacter getCharacter(String id) {
+    public Single<MovieCharacter> getCharacter(String id) {
         log.debug("getCharacter, id={}", id);
-        return characterData.get(id);
+        return Single.just(characterData.get(id));
     }
 
     /**
@@ -45,9 +46,9 @@ public class DataService {
      * @param id human id
      * @return
      */
-    public Human getHuman(String id) {
+    public Single<Human> getHuman(String id) {
         log.debug("getHuman, id={}", id);
-        return humanData.get(id);
+        return Single.just(humanData.get(id));
     }
 
     /**
@@ -56,9 +57,9 @@ public class DataService {
      * @param id Droid id
      * @return
      */
-    public Droid getDroid(String id) {
+    public Single<Droid> getDroid(String id) {
         log.debug("getDroid, id={}", id);
-        return droidData.get(id);
+        return Single.just(droidData.get(id));
     }
 
     /**
@@ -67,9 +68,9 @@ public class DataService {
      * @param id starship id
      * @return
      */
-    public Starship getStarship(String id) {
+    public Single<Starship> getStarship(String id) {
         log.debug("getStarship, id={}", id);
-        return starshipData.get(id);
+        return Single.just(starshipData.get(id));
     }
 
     /**
@@ -78,13 +79,9 @@ public class DataService {
      * @param episode the episode
      * @return
      */
-    public MovieCharacter getHero(Episode episode) {
+    public Single<MovieCharacter> getHero(Episode episode) {
         log.debug("getHero, episode={}", episode);
-        if (episode == EMPIRE) {
-            return characterData.get("1000");
-        } else {
-            return characterData.get("2001");
-        }
+        return Single.just(characterData.get(episode == EMPIRE ? "1000" : "2001"));
     }
 
     /**
@@ -93,11 +90,11 @@ public class DataService {
      * @param id
      * @return
      */
-    public List<MovieCharacter> getFriends(String id) {
+    public Single<List<MovieCharacter>> getFriends(String id) {
         log.debug("getFriends, id={}", id);
-        return this.characterData.get(id).getFriends().stream()
+        return Single.just(this.characterData.get(id).getFriends().stream()
             .map(cid -> characterData.get(cid))
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
     }
 
     /**
@@ -106,11 +103,11 @@ public class DataService {
      * @param id
      * @return
      */
-    public List<Starship> getStarshipsByHumanId(String id) {
+    public Single<List<Starship>> getStarshipsByHumanId(String id) {
         log.debug("getStarshipsByHumanId, id={}", id);
-        return this.humanData.get(id).getStarships().stream()
+        return Single.just(this.humanData.get(id).getStarships().stream()
             .map(sid -> this.starshipData.get(sid))
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
     }
 
     /**
@@ -119,12 +116,12 @@ public class DataService {
      * @param text
      * @return
      */
-    public List<Object> search(String text) {
+    public Single<List<Object>> search(String text) {
         log.debug("search by text, text={}", text);
         List<Object> results = new ArrayList<>();
         results.addAll(characterData.values().stream().filter(c -> textMatch(c.getName(), text)).collect(Collectors.toList()));
         results.addAll(starshipData.values().stream().filter(s -> textMatch(s.getName(), text)).collect(Collectors.toList()));
-        return results;
+        return Single.just(results);
     }
 
     /**
@@ -134,10 +131,10 @@ public class DataService {
      * @param review
      * @return
      */
-    public Review addReview(Episode episode, Review review) {
+    public Single<Review> addReview(Episode episode, Review review) {
         log.debug("addReview for episode {}", episode);
         reviewData.get(episode).add(review);
-        return review;
+        return Single.just(review);
     }
 
     /**
@@ -146,9 +143,9 @@ public class DataService {
      * @param episode
      * @return
      */
-    public List<Review> getReviews(Episode episode) {
+    public Single<List<Review>> getReviews(Episode episode) {
         log.debug("getReviews for episode {}", episode);
-        return reviewData.get(episode);
+        return Single.just(reviewData.get(episode));
     }
 
     /**
@@ -156,9 +153,9 @@ public class DataService {
      *
      * @return
      */
-    public String getAboutMessage() {
+    public Single<String> getAboutMessage() {
         log.debug("getAboutMessage");
-        return this.aboutMessage;
+        return Single.just(this.aboutMessage);
     }
 
     /**
@@ -166,9 +163,10 @@ public class DataService {
      *
      * @param message
      */
-    public void setAboutMessage(String message) {
+    public Single<String> setAboutMessage(String message) {
         log.debug("setAboutMessage message={}", message);
         this.aboutMessage = message;
+        return Single.just(this.aboutMessage);
     }
 
     private boolean textMatch(String source, String text) {
