@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    image: "examples/apollo-graphql-example"
+    container_name: "apollo-graphql-example"    
+    ports:
+      - "4000:4000"
+    environment:
+      TZ: Canada/Eastern

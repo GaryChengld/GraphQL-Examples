@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    image: "examples/vertx-graphql-example"
+    container_name: "vertx-graphql-example"    
+    ports:
+      - "8000:8000"
+    environment:
+      TZ: Canada/Eastern

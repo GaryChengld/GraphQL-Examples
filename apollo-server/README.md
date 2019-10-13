@@ -1,5 +1,11 @@
-# GraphQL Example on Node.js, express and apollo server
+# GraphQL NodeJS Apollo server Example on Node.js
 
-** Start
+** Install
+```
+npm install
+```
 
+** start
+```
 npm start
+```

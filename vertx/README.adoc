@@ -1,8 +1,6 @@
-= Graphql
+= Graphql Vertx example
 
 image:https://img.shields.io/badge/vert.x-3.8.2-purple.svg[link="https://vertx.io"]
-
-This application was generated using http://start.vertx.io
 
 == Building
 
