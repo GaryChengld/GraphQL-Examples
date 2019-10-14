@@ -19,3 +19,12 @@ To run your application:
 ./mvnw clean compile exec:java -conf src\conf\config.json
 ```
 
+To run in docker
+```
+docker-compose up -d --build
+```
+
+To stop in docker
+```
+docker-compose down
+```

@@ -1,13 +1,13 @@
-# GraphQL NodeJS Apollo server Example
+# GraphQL Spring Boot Web-flux Example
 
-### Install
+### Build
 ```
-npm install
+mvn clean install
 ```
 
 ### To run locally
 ```
-npm start
+mvn spring-boot:run
 ```
 
 ### To run in docker
