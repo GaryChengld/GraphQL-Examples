@@ -1,4 +1,4 @@
-# GraphQL-Examples
+# GraphQL Examples
 
 **This repository contains examples which applied GraphQL**
 
