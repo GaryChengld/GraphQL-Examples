@@ -3,7 +3,7 @@ server:
   port: 8000
 
 graphql:
-  url: api
+  servlet.mapping: /api
 
 logging:
   level.root: INFO
