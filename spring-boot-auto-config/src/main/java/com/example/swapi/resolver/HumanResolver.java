@@ -2,10 +2,7 @@ package com.example.swapi.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 import com.example.swapi.CommonUtils;
-import com.example.swapi.data.DataService;
-import com.example.swapi.data.Human;
-import com.example.swapi.data.LengthUnit;
-import com.example.swapi.data.Starship;
+import com.example.swapi.data.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,5 +24,9 @@ public class HumanResolver implements GraphQLResolver<Human> {
 
     public Double getHeight(Human human, LengthUnit unit) {
         return CommonUtils.getLength(human.getHeight(), unit);
+    }
+
+    public List<MovieCharacter> getFriends(Human human) {
+        return dataService.getFriends(human.getId());
     }
 }
