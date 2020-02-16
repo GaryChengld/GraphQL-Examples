@@ -4,6 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.example.swapi.data.DataService;
 import com.example.swapi.data.Episode;
 import com.example.swapi.data.Review;
+import com.example.swapi.data.ReviewInput;
 import org.springframework.stereotype.Component;
 
 /**

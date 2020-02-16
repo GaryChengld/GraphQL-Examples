@@ -1,6 +1,5 @@
-package com.example.swapi.resolver;
+package com.example.swapi.data;
 
-import com.example.swapi.data.Review;
 import lombok.Data;
 
 /**
