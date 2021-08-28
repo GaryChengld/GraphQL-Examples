@@ -5,7 +5,6 @@ import com.example.swapi.CommonUtils;
 import com.example.swapi.data.DataService;
 import com.example.swapi.data.LengthUnit;
 import com.example.swapi.data.Starship;
-import graphql.schema.DataFetchingEnvironment;
 import org.springframework.stereotype.Component;
 
 /**
