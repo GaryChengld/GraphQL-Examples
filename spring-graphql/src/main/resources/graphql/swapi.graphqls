@@ -1,3 +1,28 @@
 type Query {
     greeting: String
+    character(id: ID!): Character
+    human(id: ID!): Human
+}
+
+interface Character {
+    id: ID!
+    name: String!
+    appearsIn: [Episode]!
+}
+
+enum Episode {
+    # Star Wars Episode IV: A New Hope, released in 1977.
+    NEWHOPE
+    # Star Wars Episode V: The Empire Strikes Back, released in 1980.
+    EMPIRE
+    # Star Wars Episode VI: Return of the Jedi, released in 1983.
+    JEDI
+}
+
+type Human implements Character {
+    id: ID!
+    name: String!
+    height: Float
+    mass: Float
+    appearsIn: [Episode]!
 }
