@@ -21,8 +21,8 @@ public class SwapiConfigurer implements RuntimeWiringConfigurer {
 
     @Override
     public void configure(RuntimeWiring.Builder builder) {
-        log.debug("SwapiConfigurer");
+        log.debug("configure RuntimeWiring");
         builder.type(newTypeWiring("Character")
-                .typeResolver(graphQLTypeResolver));
+                .typeResolver(graphQLTypeResolver::resolveCharacter));
     }
 }

@@ -7,6 +7,7 @@ type Query {
 interface Character {
     id: ID!
     name: String!
+    friends: [Character]
     appearsIn: [Episode]!
 }
 
@@ -24,5 +25,14 @@ type Human implements Character {
     name: String!
     height: Float
     mass: Float
+    friends: [Character]
     appearsIn: [Episode]!
+}
+
+type Droid implements Character {
+    id: ID!
+    name: String!
+    friends: [Character]
+    appearsIn: [Episode]!
+    primaryFunction: String
 }

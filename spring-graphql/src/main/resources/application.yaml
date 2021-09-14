@@ -4,3 +4,8 @@ server:
 spring:
   graphql:
     schema.printer.enabled: true
+    path: /api
+
+logging:
+  level.root: INFO
+  level.com.example: DEBUG
