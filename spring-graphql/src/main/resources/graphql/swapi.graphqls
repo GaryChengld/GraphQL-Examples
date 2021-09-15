@@ -20,10 +20,15 @@ enum Episode {
     JEDI
 }
 
+enum LengthUnit {
+    METER
+    FOOT
+}
+
 type Human implements Character {
     id: ID!
     name: String!
-    height: Float
+    height(unit: LengthUnit = METER): Float
     mass: Float
     friends: [Character]
     appearsIn: [Episode]!
