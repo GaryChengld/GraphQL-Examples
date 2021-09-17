@@ -2,13 +2,7 @@ type Query {
     greeting: String
     character(id: ID!): Character
     human(id: ID!): Human
-}
-
-interface Character {
-    id: ID!
-    name: String!
-    friends: [Character]
-    appearsIn: [Episode]!
+    starship(id: ID!): Starship
 }
 
 enum Episode {
@@ -25,6 +19,19 @@ enum LengthUnit {
     FOOT
 }
 
+interface Character {
+    id: ID!
+    name: String!
+    friends: [Character]
+    appearsIn: [Episode]!
+}
+
+type Starship {
+    id: ID!
+    name: String!
+    length(unit: LengthUnit = METER): Float
+}
+
 type Human implements Character {
     id: ID!
     name: String!
@@ -32,6 +39,7 @@ type Human implements Character {
     mass: Float
     friends: [Character]
     appearsIn: [Episode]!
+    starships: [Starship]
 }
 
 type Droid implements Character {
