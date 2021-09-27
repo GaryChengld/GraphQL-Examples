@@ -3,6 +3,7 @@ type Query {
     character(id: ID!): Character
     human(id: ID!): Human
     starship(id: ID!): Starship
+    hero(episode: Episode): Character
 }
 
 enum Episode {

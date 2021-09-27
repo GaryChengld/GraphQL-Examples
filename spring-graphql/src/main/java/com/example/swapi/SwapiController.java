@@ -3,9 +3,9 @@ package com.example.swapi;
 import com.example.swapi.entity.*;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.GraphQlController;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import static com.example.swapi.entity.LengthUnit.FOOT;
 /**
  * @author Gary Cheng
  */
-@GraphQlController
+@Controller
 public class SwapiController {
     private DataService dataService;
 
@@ -40,6 +40,11 @@ public class SwapiController {
     @QueryMapping
     public Starship starship(@Argument String id) {
         return dataService.getStarship(id);
+    }
+
+    @QueryMapping
+    public MovieCharacter hero(@Argument Episode episode) {
+        return dataService.getHero(episode);
     }
 
     @SchemaMapping
