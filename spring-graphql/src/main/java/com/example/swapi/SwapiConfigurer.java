@@ -23,6 +23,8 @@ public class SwapiConfigurer implements RuntimeWiringConfigurer {
     public void configure(RuntimeWiring.Builder builder) {
         log.debug("configure RuntimeWiring");
         builder.type(newTypeWiring("Character")
-                .typeResolver(graphQLTypeResolver::resolveCharacter));
+                .typeResolver(graphQLTypeResolver::resolveObject));
+        builder.type(newTypeWiring("SearchResult")
+                .typeResolver(graphQLTypeResolver::resolveObject));
     }
 }

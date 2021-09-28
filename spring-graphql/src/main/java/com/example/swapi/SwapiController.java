@@ -1,7 +1,6 @@
 package com.example.swapi;
 
 import com.example.swapi.entity.*;
-import graphql.schema.DataFetchingEnvironment;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
@@ -47,14 +46,18 @@ public class SwapiController {
         return dataService.getHero(episode);
     }
 
+    @QueryMapping
+    public List<Object> search(@Argument String text) {
+        return dataService.search(text);
+    }
+
     @SchemaMapping
     public List<MovieCharacter> friends(Human human) {
         return this.dataService.getFriends(human.getId());
     }
 
     @SchemaMapping
-    public Double height(Human human, DataFetchingEnvironment environment) {
-        LengthUnit unit = LengthUnit.valueOf(environment.getArgument("unit"));
+    public Double height(Human human, @Argument LengthUnit unit) {
         return this.getLength(human.getHeight(), unit);
     }
 
@@ -69,8 +72,7 @@ public class SwapiController {
     }
 
     @SchemaMapping
-    public Double length(Starship starship, DataFetchingEnvironment environment) {
-        LengthUnit unit = LengthUnit.valueOf(environment.getArgument("unit"));
+    public Double length(Starship starship, @Argument LengthUnit unit) {
         return this.getLength(starship.getLength(), unit);
     }
 

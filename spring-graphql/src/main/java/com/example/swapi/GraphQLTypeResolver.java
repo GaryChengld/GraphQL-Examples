@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GraphQLTypeResolver {
 
-    public GraphQLObjectType resolveCharacter(TypeResolutionEnvironment environment) {
+    public GraphQLObjectType resolveObject(TypeResolutionEnvironment environment) {
         Object object = environment.getObject();
         if (object instanceof Human) {
             return (GraphQLObjectType) environment.getSchema().getType("Human");

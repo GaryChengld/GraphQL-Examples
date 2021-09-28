@@ -4,6 +4,7 @@ type Query {
     human(id: ID!): Human
     starship(id: ID!): Starship
     hero(episode: Episode): Character
+    search(text: String): [SearchResult]
 }
 
 enum Episode {
@@ -50,3 +51,5 @@ type Droid implements Character {
     appearsIn: [Episode]!
     primaryFunction: String
 }
+
+union SearchResult = Human | Droid | Starship
