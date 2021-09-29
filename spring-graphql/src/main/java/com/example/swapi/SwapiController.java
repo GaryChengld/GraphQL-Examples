@@ -2,6 +2,7 @@ package com.example.swapi;
 
 import com.example.swapi.entity.*;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,16 @@ public class SwapiController {
     @QueryMapping
     public List<Object> search(@Argument String text) {
         return dataService.search(text);
+    }
+
+    @QueryMapping
+    public List<Review> reviews(@Argument Episode episode) {
+        return dataService.getReviews(episode);
+    }
+
+    @MutationMapping
+    public Review createReview(@Argument Episode episode, @Argument Review reviewInput) {
+        return dataService.addReview(episode, reviewInput);
     }
 
     @SchemaMapping

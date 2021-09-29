@@ -5,6 +5,11 @@ type Query {
     starship(id: ID!): Starship
     hero(episode: Episode): Character
     search(text: String): [SearchResult]
+    reviews(episode: Episode!): [Review]
+}
+
+type Mutation {
+    createReview(episode: Episode, review: ReviewInput!): Review
 }
 
 enum Episode {
@@ -50,6 +55,16 @@ type Droid implements Character {
     friends: [Character]
     appearsIn: [Episode]!
     primaryFunction: String
+}
+
+type Review {
+    stars: Int!
+    commentary: String
+}
+
+input ReviewInput {
+    stars: Int!
+    commentary: String!
 }
 
 union SearchResult = Human | Droid | Starship

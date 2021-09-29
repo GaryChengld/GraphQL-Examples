@@ -73,5 +73,6 @@ input ReviewInput {
     stars: Int!
     commentary: String!
 }
+
 union SearchResult = Human | Droid | Starship
 

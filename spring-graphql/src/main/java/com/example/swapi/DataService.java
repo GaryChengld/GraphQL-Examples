@@ -24,6 +24,7 @@ public class DataService {
     private Map<String, Droid> droidData;
     private Map<String, Starship> starshipData;
     private Map<String, MovieCharacter> characterData;
+    private Map<Episode, List<Review>> reviewData;
 
     /**
      * Find character by id
@@ -110,6 +111,17 @@ public class DataService {
         results.addAll(characterData.values().stream().filter(c -> textMatch(c.getName(), text)).collect(Collectors.toList()));
         results.addAll(starshipData.values().stream().filter(s -> textMatch(s.getName(), text)).collect(Collectors.toList()));
         return results;
+    }
+
+    public Review addReview(Episode episode, Review review) {
+        log.debug("addReview for episode {}", episode);
+        reviewData.get(episode).add(review);
+        return review;
+    }
+
+    public List<Review> getReviews(Episode episode) {
+        log.debug("getReviews for episode {}", episode);
+        return reviewData.get(episode);
     }
 
     private boolean textMatch(String source, String text) {
@@ -207,6 +219,10 @@ public class DataService {
                 "Imperial shuttle",
                 20.0
         ));
+        reviewData = new HashMap<>();
+        reviewData.put(NEWHOPE, new ArrayList<>());
+        reviewData.put(EMPIRE, new ArrayList<>());
+        reviewData.put(JEDI, new ArrayList<>());
     }
 
     private void addHuman(Human human) {
